@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CryptoAnalizer.MVVM.Model
 {
-    public class Coin
+    public class Datum
     {
         public string id { get; set; }
         public string rank { get; set; }
@@ -23,6 +23,7 @@ namespace CryptoAnalizer.MVVM.Model
 
     public class Root
     {
-        public Coin coin { get; set; }
+        public List<Datum> data { get; set; }
+        public long timestamp { get; set; }
     }
 }

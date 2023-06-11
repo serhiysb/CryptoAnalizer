@@ -3,16 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:CryptoAnalizer.MVVM.ViewModel"
              xmlns:local="clr-namespace:CryptoAnalizer.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="600"
+             BorderBrush="#F3EFD7"
+             BorderThickness="0">
+    <UserControl.DataContext>
+        <viewModel:GeneralViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <ListBox>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text=""/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListView x:Name="CryptoList" 
+                  Background="#F3EFD7"
+                  Foreground="#7E795B"
+                  ItemsSource="{Binding CurrentCoins}" Margin="0,10,0,-10">
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Symbol" 
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=symbol}"/>
+                    <GridViewColumn Header="Name"
+                                    Width="300"
+                                    DisplayMemberBinding="{Binding Path=name}"/>
+                    <GridViewColumn Header="Supply"
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding Path=supply}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
+
+<!--<GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Background="Transparent"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>-->
+<!--</GridViewColumn>-->

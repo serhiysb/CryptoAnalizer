@@ -1,13 +1,15 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CryptoAnalizer.Core
 {
     public class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(name));
+            if(PropertyChanged != null) 
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
