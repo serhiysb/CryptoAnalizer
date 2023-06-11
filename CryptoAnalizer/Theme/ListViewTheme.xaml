@@ -10,15 +10,35 @@
         </Style.Setters>
 
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
+            <Trigger Property="IsMouseOver" 
+                     Value="True">
                 <Setter Property="Background" 
-                            Value="#B5AB6F"/>
+                        Value="#B5AB6F"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style TargetType="ListView">
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Style.Setters>
+            <Setter Property="BorderBrush" 
+                    Value="Transparent"/>
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="ListViewItem">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" 
+                     Value="True">
+                <Setter Property="Background" 
+                        Value="#CBC188"/>
+            </Trigger>
+            <Trigger Property="IsFocused" 
+                     Value="True">
+                <Setter Property="Background" 
+                        Value="#BBB17A"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

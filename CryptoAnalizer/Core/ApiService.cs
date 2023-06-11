@@ -18,7 +18,7 @@ namespace CryptoAnalizer.Core
             _httpClient = new HttpClient();
         }
 
-        public async Task <Root> GetCoinsFromApi()
+        public async Task <RootDatum> GetCoinsFromApi()
         {
             string apiUrl = "https://api.coincap.io/v2/assets";
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
@@ -26,11 +26,43 @@ namespace CryptoAnalizer.Core
             if (response.IsSuccessStatusCode)
             {
                 string responseContent = await response.Content.ReadAsStringAsync();
-                Root coin = JsonSerializer.Deserialize <Root>(responseContent);
+                RootDatum coin = JsonSerializer.Deserialize <RootDatum>(responseContent);
                 return coin;
             }
             else
-                return new Root();
+                return new RootDatum();
+        }
+
+        public async Task<RootData> GetCoinByName(string name)
+        {
+            string apiUrl = "https://api.coincap.io/v2/assets/"+name;
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string responseContent = await response.Content.ReadAsStringAsync();
+                RootData coin = JsonSerializer.Deserialize<RootData>(responseContent);
+                return coin;
+            }
+            else
+                return new RootData();
+        }
+        
+        public async Task<RootMarkets> GetMarketsByCoin(string name)
+        {
+            string apiUrl = "https://api.coincap.io/v2/assets/"+name+"/markets";
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string responseContent = await response.Content.ReadAsStringAsync();
+                RootMarkets markets = JsonSerializer.Deserialize<RootMarkets>(responseContent);
+                return markets;
+            }
+            else
+                return new RootMarkets();
         }
     }
+
+   
 }

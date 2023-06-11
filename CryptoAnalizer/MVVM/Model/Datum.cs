@@ -21,7 +21,7 @@ namespace CryptoAnalizer.MVVM.Model
         public string vwap24Hr { get; set; }
     }
 
-    public class Root
+    public class RootDatum
     {
         public List<Datum> data { get; set; }
         public long timestamp { get; set; }

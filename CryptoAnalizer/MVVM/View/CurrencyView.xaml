@@ -3,11 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:CryptoAnalizer.MVVM.ViewModel"
              xmlns:local="clr-namespace:CryptoAnalizer.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="Black">
+             d:DesignHeight="420" d:DesignWidth="600"
+             Background="#F3EFD7">
+    <UserControl.DataContext>
+        <viewModel:CurrencyViewModel/>
+    </UserControl.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" 
+                 x:Name="SearchTextBox"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Margin="10" 
+                 Style="{StaticResource TextBoxSearchTheme}"
+                 Text="{Binding Path=SearchName, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1">
+                <TextBox Text="{Binding Path=CurrentCoin.data.name, UpdateSourceTrigger=Explicit}" 
+                 
+                 Height="30"
+                 Width="180"
+                     HorizontalAlignment="Left"
+                     Margin="10"/>
+                <TextBox Text="{Binding Path=CurrentCoin.data.changePercent24Hr, UpdateSourceTrigger=Explicit}" 
+                  
+                 Height="30"
+                 Width="180"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Margin="10"/>
+                <TextBox Text="{Binding Path=CurrentCoin.data.priceUsd, UpdateSourceTrigger=Explicit}" 
+                  
+                 Height="30"
+                 Width="180"
+                     HorizontalAlignment="Left"
+                     Margin="10"/>
+            </StackPanel>
             
+        </Grid>
+        
     </Grid>
 </UserControl>

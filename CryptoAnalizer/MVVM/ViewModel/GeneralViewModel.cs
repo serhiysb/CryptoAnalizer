@@ -2,13 +2,7 @@
 using CryptoAnalizer.MVVM.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace CryptoAnalizer.MVVM.ViewModel
 {
@@ -33,7 +27,6 @@ namespace CryptoAnalizer.MVVM.ViewModel
 
 
         ApiService _apiService = new ApiService();
-        public RelayCommand ShowCoins { get; set; }
 
         public GeneralViewModel()
         {
@@ -42,7 +35,11 @@ namespace CryptoAnalizer.MVVM.ViewModel
 
         private async void GetCoinsFromApi()
         {
-            Root tmpRoot = await _apiService.GetCoinsFromApi();
+            RootDatum tmpRoot = await _apiService.GetCoinsFromApi();
+            for (int i = 0; i < 10; i++)
+            {
+                tmpRoot.data[i].priceUsd = tmpRoot.data[i].priceUsd.Substring(0, tmpRoot.data[i].priceUsd.Length-13);
+            }
             CurrentCoins = tmpRoot.data.Take(10).ToList();
         }
     }
