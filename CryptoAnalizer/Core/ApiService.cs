@@ -18,34 +18,55 @@ namespace CryptoAnalizer.Core
             _httpClient = new HttpClient();
         }
 
-        public async Task <RootDatum> GetCoinsFromApi()
+        public async Task<RootCoin> GetCoinsFromApi()
         {
-            string apiUrl = "https://api.coincap.io/v2/assets";
+            string apiUrl = "https://api.coingecko.com/api/v3/search?query";
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
             if (response.IsSuccessStatusCode)
             {
                 string responseContent = await response.Content.ReadAsStringAsync();
-                RootDatum coin = JsonSerializer.Deserialize <RootDatum>(responseContent);
+                RootCoin coin = JsonSerializer.Deserialize<RootCoin>(responseContent);
                 return coin;
             }
             else
-                return new RootDatum();
+                return new RootCoin();
         }
 
-        public async Task<RootData> GetCoinByName(string name)
+
+        public async Task <RootTop> GetTopCoinsFromApi()
         {
-            string apiUrl = "https://api.coincap.io/v2/assets/"+name;
+            //string apiUrl = "https://api.coincap.io/v2/assets";
+            string apiUrl = "https://api.coingecko.com/api/v3/search/trending";
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
             if (response.IsSuccessStatusCode)
             {
                 string responseContent = await response.Content.ReadAsStringAsync();
-                RootData coin = JsonSerializer.Deserialize<RootData>(responseContent);
+                RootTop coin = JsonSerializer.Deserialize <RootTop>(responseContent);
                 return coin;
             }
             else
-                return new RootData();
+                return new RootTop();
+        }
+
+        public async Task<RootCoin> GetCoinByName(string name)
+        {
+            string apiUrl;
+            if (name.Length > 0)
+                apiUrl = "https://api.coingecko.com/api/v3/search?query=" + name;
+            else
+                apiUrl = "https://api.coingecko.com/api/v3/search?query";
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string responseContent = await response.Content.ReadAsStringAsync();
+                RootCoin coin = JsonSerializer.Deserialize<RootCoin>(responseContent);
+                return coin;
+            }
+            else
+                return new RootCoin();
         }
         
         public async Task<RootMarkets> GetMarketsByCoin(string name)

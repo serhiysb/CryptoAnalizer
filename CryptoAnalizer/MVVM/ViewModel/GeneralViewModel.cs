@@ -9,13 +9,13 @@ namespace CryptoAnalizer.MVVM.ViewModel
     public class GeneralViewModel : ObservableObject
     {
 
-        private List<Datum>? currentCoins;
-        public List<Datum> CurrentCoins
+        private List<TopCoin>? currentCoins;
+        public List<TopCoin> CurrentCoins
         {
             get
             {
                 if (currentCoins == null)
-                    currentCoins = new List<Datum>();
+                    currentCoins = new List<TopCoin>();
                 return currentCoins;
             }
             set
@@ -30,17 +30,19 @@ namespace CryptoAnalizer.MVVM.ViewModel
 
         public GeneralViewModel()
         {
-            GetCoinsFromApi();
+            GetTopCoinsFromApi();
         }
 
-        private async void GetCoinsFromApi()
+        private async void GetTopCoinsFromApi()
         {
-            RootDatum tmpRoot = await _apiService.GetCoinsFromApi();
-            for (int i = 0; i < 10; i++)
+            RootTop tmpRoot = await _apiService.GetTopCoinsFromApi();
+            for (int i = 0; i < tmpRoot.coins.Count; i++)
             {
-                tmpRoot.data[i].priceUsd = tmpRoot.data[i].priceUsd.Substring(0, tmpRoot.data[i].priceUsd.Length-13);
+                double tmpDigit = tmpRoot.coins[i].item.price_btc;
+                string truncatedNumber = tmpDigit.ToString();
+                tmpRoot.coins[i].item.price_btc = double.Parse(truncatedNumber.Substring(0,truncatedNumber.Length-15));
             }
-            CurrentCoins = tmpRoot.data.Take(10).ToList();
+            CurrentCoins = tmpRoot.coins.ToList();
         }
     }
 }

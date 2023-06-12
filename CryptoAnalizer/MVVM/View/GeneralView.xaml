@@ -12,22 +12,50 @@
         <viewModel:GeneralViewModel/>
     </UserControl.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                Background="#F3EFD7">
+            <TextBlock 
+                   Text="Top 7 Currency"
+                   Background="#F3EFD7"
+                   Foreground="#7E795B"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="17"/>
+        </Border>
+            
+
         <ListView x:Name="CryptoList" 
                   Background="#F3EFD7"
                   Foreground="#7E795B"
-                  ItemsSource="{Binding CurrentCoins}" Margin="0,10,0,-10">
+                  ItemsSource="{Binding CurrentCoins}" Margin="0,10,0,-10"
+                  Grid.Row="1">
             
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Icon"
+                                    x:Name="Icon"
+                                    Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Path=item.thumb}" Height="20" Width="20"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+
+
+                    </GridViewColumn>
                     <GridViewColumn Header="Symbol" 
                                     Width="100"
-                                    DisplayMemberBinding="{Binding Path=symbol}"/>
+                                    DisplayMemberBinding="{Binding Path=item.symbol}"/>
                     <GridViewColumn Header="Name"
-                                    Width="300"
-                                    DisplayMemberBinding="{Binding Path=name}"/>
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding Path=item.name}"/>
                     <GridViewColumn Header="Price"
                                     Width="200"
-                                    DisplayMemberBinding="{Binding Path=priceUsd}"/>
+                                    DisplayMemberBinding="{Binding Path=item.price_btc}"/>
                 </GridView>
             </ListView.View>
         </ListView>

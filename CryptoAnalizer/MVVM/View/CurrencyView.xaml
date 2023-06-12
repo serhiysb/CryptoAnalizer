@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModel="clr-namespace:CryptoAnalizer.MVVM.ViewModel"
-             xmlns:local="clr-namespace:CryptoAnalizer.MVVM.View"
+             xmlns:local="clr-namespace:CryptoAnalizer.MVVM.View" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="420" d:DesignWidth="600"
              Background="#F3EFD7">
@@ -22,35 +22,49 @@
                  VerticalAlignment="Center"
                  Margin="10" 
                  Style="{StaticResource TextBoxSearchTheme}"
-                 Text="{Binding Path=SearchName, UpdateSourceTrigger=PropertyChanged}"/>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="1">
-                <TextBox Text="{Binding Path=CurrentCoin.data.name, UpdateSourceTrigger=Explicit}" 
-                 
-                 Height="30"
-                 Width="180"
-                     HorizontalAlignment="Left"
-                     Margin="10"/>
-                <TextBox Text="{Binding Path=CurrentCoin.data.changePercent24Hr, UpdateSourceTrigger=Explicit}" 
-                  
-                 Height="30"
-                 Width="180"
-                     HorizontalAlignment="Left"
-                     VerticalAlignment="Top"
-                     Margin="10"/>
-                <TextBox Text="{Binding Path=CurrentCoin.data.priceUsd, UpdateSourceTrigger=Explicit}" 
-                  
-                 Height="30"
-                 Width="180"
-                     HorizontalAlignment="Left"
-                     Margin="10"/>
-            </StackPanel>
-            
-        </Grid>
-        
+                 Text="{Binding Path=SearchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        </TextBox>
+
+        <ListView x:Name="CryptoList" 
+                  Background="#F3EFD7"
+                  Foreground="#7E795B"
+                  ItemsSource="{Binding CurrentSearchedCoins}" Margin="0,10,0,-10"
+                  Grid.Row="1"
+                  Width="600">
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Icon"
+                                    x:Name="Icon"
+                                    Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Path=thumb}" Height="20" Width="20"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Symbol" 
+                                    x:Name="Symbol"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=symbol}"/>
+                    <GridViewColumn Header="Name"
+                                        x:Name="NameCoin"
+                                    Width="220"
+                                    DisplayMemberBinding="{Binding Path=name}"/>
+                    <GridViewColumn Header="Go"
+                                    x:Name="CoinDetails"
+                                    Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="100" 
+                                        Height="20"
+                                        Content="{Binding Path=symbol}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
